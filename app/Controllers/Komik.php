@@ -13,7 +13,7 @@ class Komik extends BaseController
         $this->komikModel = new KomikModel();
     }
 
-    public function index(): string
+    public function index()
     {
         /*
          * cara koneksi database tanpa menggunakan model
@@ -26,13 +26,31 @@ class Komik extends BaseController
         *
         */
 
-        $komik = $this->komikModel->findAll();
+        //$komik = $this->komikModel->findAll();
 
         $data = [
             'title' => 'List Komik',
-            'komik' => $komik
+            'komik' => $this->komikModel->getKomik()
         ];
 
         return view('komik/index', $data);
+    }
+
+    public function detail($slug)
+    {
+        $data = [
+            'title' => 'Details Komik',
+            'komik' => $this->komikModel->getKomik($slug)
+        ];
+
+        return view('komik/detail', $data);
+    }
+
+    public function create()
+    {
+        $data = [
+            'title' => 'Form Tambah Data Komik'
+        ];
+        return view('komik/create', $data);
     }
 }
